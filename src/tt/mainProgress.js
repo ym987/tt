@@ -22,7 +22,7 @@ function MainProgress({ ttID, mtchingId }) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [ mtchingId ]);
 
   useEffect(() => {
     setInterval(() => {
@@ -37,7 +37,7 @@ function MainProgress({ ttID, mtchingId }) {
           console.log(error);
         });
     }, 10000);
-  }, []);
+  }, [ mtchingId ]);
 
   const progress = Math.floor((list.Donated / list.Goal) * 100);
 

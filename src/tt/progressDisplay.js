@@ -46,7 +46,7 @@ function ProgressDisplay({ ttID }) {
           console.log(error);
         });
     }, 10000);
-  },[]);
+  },[ttID]);
 
   return (
     <div>
@@ -71,3 +71,4 @@ function ProgressDisplay({ ttID }) {
 }
 
 export default ProgressDisplay;
+
