@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'CustomFont';
+  src: url('./tt/GeulaTagBlack.ttf') format('truetype');
+  /* Add additional font styles if needed */
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

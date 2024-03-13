@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
 import ProgressBar from "@ramonak/react-progress-bar";
+
 function MainProgress({ ttID, mtchingId }) {
   const [list, setList] = useState({});
   console.log("====================================");
@@ -64,8 +65,8 @@ function MainProgress({ ttID, mtchingId }) {
       />
       <br />
 
-      <Typography variant="h2" textAlign={"center"}>
-        :עד כה נתרם <br/> {donated} <br/> :מתוך יעד <br/> {goal}  <br/> {Math.floor(progress)}%
+      <Typography fontFamily={'CustomFont'} variant="h2" textAlign={"center"}>
+       <span dir="rtl">עד כה נתרם:</span><br/> <span style={{ color: "gray" }}>{donated}</span>  <br/> <span dir="rtl">מתוך יעד:</span> <br/> <span style={{ color: "gray" }}>{goal}</span>  <br/> {Math.floor(progress)}%
       </Typography>
       <br />
 
