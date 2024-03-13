@@ -1,8 +1,8 @@
 import { useState } from "react";
 import React from 'react';
 import SetID from "./SetID";
-import ProgressDisplay from "./progressDisplay";
-import MainProgress from "./mainProgress";
+import Main from "./main";
+
 
 function App() {
     const [ttID, setttID] = useState("");
@@ -13,8 +13,7 @@ function App() {
   return (
     <div className="App">
         {!ttID && <SetID ttID={ttID} setttID={setttID} setMatchingId={setMatchingId} mtchingId={mtchingId}/>}
-        {ttID && <MainProgress ttID={ttID} mtchingId={mtchingId}/>}
-        {ttID && <ProgressDisplay ttID={ttID} />}
+        {ttID && <Main ttID={ttID} mtchingId={mtchingId}/>}
     </div>
   );
 }

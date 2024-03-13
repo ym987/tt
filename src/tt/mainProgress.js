@@ -12,7 +12,6 @@ function MainProgress({ ttID, mtchingId }) {
     axios
       .get(
         `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`
-        // "https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=500"
       )
       .then((response) => {
         setList(response.data);
@@ -22,10 +21,10 @@ function MainProgress({ ttID, mtchingId }) {
       .catch((error) => {
         console.log(error);
       });
-  }, [ mtchingId ]);
+  }, [mtchingId]);
 
   useEffect(() => {
-    setInterval(() => {
+    const interval =  setInterval(() => {
       axios
         .get(
           `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`
@@ -36,23 +35,42 @@ function MainProgress({ ttID, mtchingId }) {
         .catch((error) => {
           console.log(error);
         });
-    }, 10000);
-  }, [ mtchingId ]);
+    }, 30000);
+    return () => clearInterval(interval);
+
+  }, [mtchingId]);
+
+  //   const number = 1000000;
+  // const numberWithCommas = number.toLocaleString();
+  // console.log(numberWithCommas); // Output: 1,000,000
 
   const progress = Math.floor((list.Donated / list.Goal) * 100);
-
+  const goal = list.Goal && Number(list.Goal).toLocaleString();
+  const donated = list.Donated && Number(list.Donated).toLocaleString();
   return (
-    <div style={{ margin: "10px"}}>
+    <div style={{ margin: "10px" }}>
+      <br />
+      <br />
+
       <img
-        style={{ margin: "auto",  display: "block"    }}
+        style={{
+          margin: "auto",
+          display: "block",
+          width: "100%",
+          height: "100%",
+        }}
         src={`https://images.matara.pro/ClientsImages/${ttID}.jpg?7`}
         alt=""
       />
-     
-        <Typography variant="h3" textAlign={'center'}>
-          עד כה נתרם:{list.Donated} מתוך יעד:{list.Goal} {Math.floor(progress)}%
-        </Typography>
-  
+      <br />
+      <br />
+      <br />
+
+      <Typography variant="h2" textAlign={"center"}>
+        עד כה נתרם:{donated} מתוך יעד:{goal} {Math.floor(progress)}%
+      </Typography>
+      <br />
+
       <ProgressBar
         completed={progress}
         bgColor="green"

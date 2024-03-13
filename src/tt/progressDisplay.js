@@ -15,6 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function ProgressDisplay({ ttID }) {
   const [list, setList] = useState([]);
+  const [count, setCount] = useState(0);
 
     useEffect(() => {
       axios
@@ -22,7 +23,7 @@ function ProgressDisplay({ ttID }) {
           `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=SearchMatrim&Name=&MosadId=${ttID}`
         )
         .then((response) => {
-          setList(response.data);
+          setList(l => response.data);
           console.log(response.data);
           console.log(list);
         })
@@ -30,11 +31,12 @@ function ProgressDisplay({ ttID }) {
           console.log(error);
         });
     }, [ttID]);
+
   useEffect(() => {
-    setInterval(() => {
-      console.log("====================================");
-      console.log(1654);
-      console.log("====================================");
+    const interval = setInterval(() => {
+      console.log(count);
+      setCount(c => c + 1);
+      console.log(count);
       axios
         .get(
           `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=SearchMatrim&Name=&MosadId=${ttID}`
@@ -46,10 +48,21 @@ function ProgressDisplay({ ttID }) {
           console.log(error);
         });
     }, 10000);
-  },[ttID]);
+
+    return () => clearInterval(interval);
+  },[ttID, count]);
+
+  const numOfDifferent= Math.floor(list.length / 16) + 1;
+  let myCount = count % (numOfDifferent);
+  console.log('====================================');
+  console.log(count,myCount, numOfDifferent);
+  console.log('====================================');
+ const listToDisplay = list.slice((myCount * 16), myCount * 16 + 16);
+
 
   return (
     <div>
+   
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
@@ -57,7 +70,7 @@ function ProgressDisplay({ ttID }) {
       >
         {/* {list[0].Name} */}
 
-        {list.map((info, i) => (
+        {listToDisplay.map((info, i) => (
           <Grid item key={i} xs={3}>
             <Item>
               <ColorChangingComponent info={info} />
