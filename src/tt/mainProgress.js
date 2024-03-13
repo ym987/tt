@@ -63,11 +63,9 @@ function MainProgress({ ttID, mtchingId }) {
         alt=""
       />
       <br />
-      <br />
-      <br />
 
       <Typography variant="h2" textAlign={"center"}>
-        עד כה נתרם:{donated} מתוך יעד:{goal} {Math.floor(progress)}%
+        :עד כה נתרם <br/> {donated} <br/> :מתוך יעד <br/> {goal}  <br/> {Math.floor(progress)}%
       </Typography>
       <br />
 

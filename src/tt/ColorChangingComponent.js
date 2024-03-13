@@ -16,8 +16,7 @@ const ColorChangingComponent = ({ info }) => {
       {/* <Typography variant="p">מספר מתרים: {info.Id}</Typography> */}
       {/* <br /> */}
       <Typography variant="p">
-        עד כה נתרם:{cumule} מתוך יעד:{goal}{" "}
-        {Math.floor(progress)}%
+         נתרם:{cumule} מתוך יעד:{goal}
       </Typography>
       <ProgressBar  completed={progress} bgColor="green"  margin="1px" isLabelVisible={true}/>
     </div>
