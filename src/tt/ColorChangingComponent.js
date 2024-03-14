@@ -9,14 +9,14 @@ const ColorChangingComponent = ({ info }) => {
   const cumule = info.Cumule && Number(info.Cumule).toLocaleString();
 
   return (
-    <div style={{width:'20wh', height:'15vh'}}>
+    <div style={{width:'20wh', height:'13vh'}}>
        
    
-      <Typography margin={'auto'}  maxWidth={"20wh"} maxHeight={"8vh"} variant="h6">{info.Name.slice(0, 30)}</Typography>
+      <Typography margin={'auto'} fontFamily={'CustomFont'} color={"black"} fontSize={'3vh'} maxWidth={"20wh"} maxHeight={"8vh"} variant="h6">{info.Name.slice(0, 30)}</Typography>
       {/* <Typography variant="p">מספר מתרים: {info.Id}</Typography> */}
       {/* <br /> */}
-      <Typography variant="p">
-         נתרם:{cumule} מתוך יעד:{goal}
+      <Typography color={"black"}  variant="p" fontFamily={'CustomFont'} fontSize={'2.5vh'}>
+         נתרם: {cumule} מתוך: {goal}
       </Typography>
       <ProgressBar  completed={progress} bgColor="green"  margin="1px" isLabelVisible={true}/>
     </div>
