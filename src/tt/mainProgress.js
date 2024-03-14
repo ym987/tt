@@ -66,7 +66,7 @@ function MainProgress({ ttID, mtchingId }) {
       <br />
 
       <Typography fontFamily={'CustomFont'} variant="h2" textAlign={"center"}>
-       <span dir="rtl">עד כה נתרם:</span><br/> <span style={{ color: "gray" }}>{donated}</span>  <br/> <span dir="rtl">מתוך יעד:</span> <br/> <span style={{ color: "gray" ,fontSize:'12vh'}}>{goal}</span>  <br/> {Math.floor(progress)}%
+       <span dir="rtl">עד כה נתרם:</span><br/> <span style={{ color: "gray" }}>{donated}</span>  <br/> <span dir="rtl">מתוך:</span> <br/> <span style={{ color: "gray" ,fontSize:'12vh'}}>{goal}</span>  <br/> {Math.floor(progress)}%
       </Typography>
       <br />
 
