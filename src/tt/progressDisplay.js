@@ -53,16 +53,19 @@ function ProgressDisplay({ ttID }) {
   },[ttID, count]);
   const amountToDisplay = 20;
 
-  const numOfDifferent= Math.floor(list.length / amountToDisplay) + 1;
+  let numOfDifferent= Math.floor(list.length / amountToDisplay);
+  if(numOfDifferent !== list.length / amountToDisplay){
+    numOfDifferent++;
+  }
   let myCount = count % (numOfDifferent);
-  console.log('====================================');
-  console.log(count,myCount, numOfDifferent);
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log(count,myCount, numOfDifferent);
+  // console.log('====================================');
  const listToDisplay = list.slice((myCount * amountToDisplay), myCount * amountToDisplay + amountToDisplay);
 
 
   return (
-    <div style={{marginTop: '5vh', marginLeft: '5vh', marginRight: '5vh', marginBottom: '5vh'}}>
+    <div style={{marginTop: '3.4vh', marginLeft: '5vh', marginRight: '5vh', marginBottom: '3.4vh'}}>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
