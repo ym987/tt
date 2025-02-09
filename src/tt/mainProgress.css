@@ -1,0 +1,42 @@
+.main-progress {
+    margin: 10px;
+    width: 100%;
+    height: 100%;
+
+  }
+  
+  .main-progress-image {
+    margin: auto;
+    margin-top: 5%;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .main-progress-image {
+      width: 100%;
+      height: auto;
+    }
+  
+    .main-progress h2 {
+      font-size: 1.5rem;
+    }
+  
+    .main-progress span {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .main-progress h2 {
+      font-size: 1.2rem;
+    }
+  
+    .main-progress span {
+      font-size: 0.8rem;
+    }
+  }
+  
+
+  

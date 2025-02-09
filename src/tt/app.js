@@ -12,8 +12,8 @@ function App() {
 
   return (
     <div className="App">
-        {!ttID && <SetID ttID={ttID} setttID={setttID} setMatchingId={setMatchingId} mtchingId={mtchingId}/>}
-        {ttID && <Main ttID={ttID} mtchingId={mtchingId}/>}
+        {(!ttID || !mtchingId) && <SetID ttID={ttID} setttID={setttID} setMatchingId={setMatchingId} mtchingId={mtchingId}/>}
+        {(ttID && mtchingId) && <Main ttID={ttID} mtchingId={mtchingId} setMatchingId={setMatchingId} setttID={setttID}/>}
     </div>
   );
 }

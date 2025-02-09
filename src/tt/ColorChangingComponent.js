@@ -1,24 +1,77 @@
-import Typography from "@mui/material/Typography";
 import ProgressBar from "@ramonak/react-progress-bar";
-
+// import { styled } from "@mui/material/styles";
+// import Paper from "@mui/material/Paper";
 
 const ColorChangingComponent = ({ info }) => {
-  const progress = Math.floor((info.Cumule / info.Goal) * 100);
+  const { Cumule = 0, Goal = 1, Name = "" } = info;
+  const progress = Math.floor((Cumule / Goal) * 100);
 
-  const goal = info.Goal && Number(info.Goal).toLocaleString();
-  const cumule = info.Cumule && Number(info.Cumule).toLocaleString();
+  const goal = info.Goal && Number(Goal).toLocaleString();
+  const cumule = Cumule && Number(Cumule).toLocaleString();
+
+  // const Item = styled(Paper)(({ theme }) => ({
+  //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  //   ...theme.typography.body2,
+  //   padding: theme.spacing(2),
+  //   textAlign: "center",
+  //   color: theme.palette.text.secondary,
+  //   margin: theme.spacing(1), // Add margin for spacing
+  //   // padding: theme.spacing(3), // Add padding for inner spacing
+  // }));
 
   return (
-    <div style={{width:'20wh', height:'13vh'}}>
-       
-   
-      <Typography margin={'auto'} fontFamily={'CustomFont'} color={"black"} fontSize={'3vh'} maxWidth={"20wh"} maxHeight={"8vh"} variant="h6">{info.Name.slice(0, 30)}</Typography>
-      {/* <Typography variant="p">מספר מתרים: {info.Id}</Typography> */}
-      {/* <br /> */}
-      <Typography color={"black"}  variant="p" fontFamily={'CustomFont'} fontSize={'2.5vh'}>
-         נתרם: {cumule} מתוך: {goal}
-      </Typography>
-      <ProgressBar  completed={progress} bgColor="green"  margin="1px" isLabelVisible={true}/>
+    <div
+      style={{
+        backgroundColor: "#fff",
+        // padding: "2vh",
+        textAlign: "center",
+        color: "#333",
+        margin: "1vh",
+        border: "0.1vh solid #ddd",
+        borderRadius: "1vh",
+        boxShadow: "0 0.2vh 0.4vh rgba(0, 0, 0, 0.1)",
+        width: `16.5vw`,
+        height: `16vh`,
+        padding: "0.5vh",
+      }}
+    >
+      <div style={{ position: "relative", height: "100%" }}>
+        <h6
+          style={{
+            fontFamily: "CustomFont",
+            color: "black",
+            fontSize: "1.8vw",
+            margin: "1vh",
+            align: "center",
+          }}
+        >
+          {Name.slice(0, 30)}
+        </h6>
+
+        <div
+          style={{
+            position: "absolute",
+            bottom: "6vh",
+            left: "50%",
+            transform: "translateX(-50%)",
+            fontFamily: "CustomFont",
+            color: "black",
+            fontSize: "1.5vw",
+            textAlign: "center",
+            whiteSpace: "nowrap",
+          }}
+        >
+          נתרם: {cumule} מתוך: {goal}
+        </div>
+        <div style={{ position: "absolute", bottom: "1vh", width: "100%" }}>
+          <ProgressBar
+            completed={progress}
+            bgColor="green"
+            isLabelVisible={true}
+          />
+        </div>
+      </div>
+      {/* </Item> */}
     </div>
   );
 };
