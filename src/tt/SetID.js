@@ -6,7 +6,7 @@ import axios from "axios";
 
 async function getCodeMossad(ttID) {
   try {
-    const apiUrl = "http://localhost:8080/api";
+    const apiUrl = "https://tt-s1kv.onrender.com/api";
     const response = await axios.get(apiUrl, { params: { MosadId: ttID } });
 
     if (response.data?.Matching) {
