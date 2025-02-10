@@ -3,9 +3,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .main-progress-image {
+  flex: 0 0 auto;
+  height: auto;
   width: auto;
   margin-top: 5%;
   display: block;
@@ -14,8 +17,20 @@
 .stats {
   font-family: CustomFont; 
   text-align: center; 
-  font-size: 2rem; 
+  font-size: 4vw; 
   margin-top: 3vh;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.progress-bar {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  padding-bottom: 50px;
 }
 
 @media (max-width: 768px) {

@@ -62,11 +62,11 @@ function MainProgress({ ttID, mtchingId }) {
       </div>
 
       {/* progress bar */}
-      <div>
+      <div className="progress-bar">
         <ProgressBar
           completed={progress}
           bgColor="green"
-          height="100"
+          height="50px"
           // margin="1px"
           isLabelVisible={true}
           />
