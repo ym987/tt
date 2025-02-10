@@ -41,31 +41,35 @@ function MainProgress({ ttID, mtchingId }) {
   const progress = Math.floor((list.Donated / list.Goal) * 100);
   const goal = list.Goal && Number(list.Goal).toLocaleString();
   const donated = list.Donated && Number(list.Donated).toLocaleString();
+
   return (
-    <div >
+    <div className="main-progress">
       
+      {/* logo */}
       <img
         className="main-progress-image"
         src={`https://images.matara.pro/ClientsImages/${ttID}.jpg?7`}
         alt="charity logo"
       />
 
-      <div style={{ fontFamily: "CustomFont", textAlign: "center", fontSize: "5vw", marginTop: "3vh" }}>
-        <span dir="rtl">עד כה נתרם:</span>
-        <br /> <span style={{ color: "gray" }}>{donated}</span> <br />{" "}
-        <span dir="rtl">מתוך:</span> {" "}
-        <span style={{ color: "gray", fontSize: "8vw" }}>{goal}</span>{""}<br />
+      {/* stats */}
+      <div className="stats">
+        <div dir="rtl">עד כה נתרם:</div>
+        <div style={{ color: "gray" }}>{donated}</div>{" "}
+        <div dir="rtl">מתוך:</div> {" "}
+        <div style={{ color: "gray", fontSize: "2em" }}>{goal}</div>{""}
         {Math.floor(progress)}%
       </div>
 
-      <div style={{ position: "absolute", bottom: "5vh", width: "100%" }}>
+      {/* progress bar */}
+      <div>
         <ProgressBar
           completed={progress}
           bgColor="green"
           height="100"
           // margin="1px"
           isLabelVisible={true}
-        />
+          />
       </div>
     </div>
   );
