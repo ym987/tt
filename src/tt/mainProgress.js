@@ -66,7 +66,7 @@ function MainProgress({ ttID, mtchingId }) {
         <ProgressBar
           completed={progress}
           bgColor="green"
-          height="50px"
+          height="35px"
           // margin="1px"
           isLabelVisible={true}
           />
