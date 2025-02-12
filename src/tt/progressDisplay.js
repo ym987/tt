@@ -7,10 +7,11 @@ import ColorChangingComponent from "./ColorChangingComponent";
 function ProgressDisplay({ ttID }) {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
-  const refreshTime = 10 * 1000; // Refresh every 10 seconds
+  const amountToDisplay = 20;
 
   const url = `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=SearchMatrim&Name=&MosadId=${ttID}`;
 
+  // fetches data at first render, and again every minute
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,28 +34,24 @@ function ProgressDisplay({ ttID }) {
     return () => clearInterval(fetchInterval); // Cleanup interval on component unmount
   }, [ttID, url]);
 
+  // refresh the grid with new donors every 10 seconds
   useEffect(() => {
-    const displayInterval = setInterval(() => {
+    const incrementCount = function() {
       setCount(
         (prevCount) =>
           (prevCount + 1) % Math.ceil(list.length / amountToDisplay)
       );
-    }, refreshTime);
+    }
+
+    const refreshTime = 10000; // Refresh every 10 seconds
+    const displayInterval = setInterval(incrementCount, refreshTime);
 
     return () => clearInterval(displayInterval); // Cleanup interval on component unmount
-  }, [list, refreshTime]);
-
-  const amountToDisplay = 20;
-
-  let numOfDifferent = Math.floor(list.length / amountToDisplay);
-  if (numOfDifferent !== list.length / amountToDisplay) {
-    numOfDifferent++;
-  }
-  let myCount = count % numOfDifferent;
+  }, [list]);
 
   const listToDisplay = list.slice(
-    myCount * amountToDisplay,
-    myCount * amountToDisplay + amountToDisplay
+    count * amountToDisplay,
+    count * amountToDisplay + amountToDisplay
   );
 
   return (

@@ -11,6 +11,7 @@ function App() {
     
 
   return (
+    
     <div className="App">
         {(!ttID || !mtchingId) && <SetID ttID={ttID} setttID={setttID} setMatchingId={setMatchingId} mtchingId={mtchingId}/>}
         {(ttID && mtchingId) && <Main ttID={ttID} mtchingId={mtchingId} setMatchingId={setMatchingId} setttID={setttID}/>}

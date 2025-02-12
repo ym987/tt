@@ -52,7 +52,7 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", justifyContent: "center", alignItems: "center", gap: "16px",}}>
       <TextField
         onChange={(e) => setInputValue(e.target.value)}
         label="הכנס את הקוד מוסד"

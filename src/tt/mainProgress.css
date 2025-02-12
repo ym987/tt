@@ -1,42 +1,59 @@
 .main-progress {
-    margin: 10px;
-    width: 100%;
-    height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  }
-  
+.main-progress-image {
+  flex: 0 0 auto;
+  height: auto;
+  width: auto;
+  margin-top: 5%;
+  display: block;
+}
+
+.stats {
+  font-family: CustomFont; 
+  text-align: center; 
+  font-size: 4vw; 
+  margin-top: 3vh;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.progress-bar {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  padding-bottom: 50px;
+}
+
+@media (max-width: 768px) {
   .main-progress-image {
-    margin: auto;
-    margin-top: 5%;
-    display: block;
     width: 100%;
     height: auto;
   }
-  
-  @media (max-width: 768px) {
-    .main-progress-image {
-      width: 100%;
-      height: auto;
-    }
-  
-    .main-progress h2 {
-      font-size: 1.5rem;
-    }
-  
-    .main-progress span {
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .main-progress h2 {
-      font-size: 1.2rem;
-    }
-  
-    .main-progress span {
-      font-size: 0.8rem;
-    }
-  }
-  
 
-  
+  .main-progress h2 {
+    font-size: 1.5rem;
+  }
+
+  .main-progress span {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-progress h2 {
+    font-size: 1.2rem;
+  }
+
+  .main-progress span {
+    font-size: 0.8rem;
+  }
+}
