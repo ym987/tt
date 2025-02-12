@@ -1,14 +1,14 @@
 const express = require('express');
 const axios = require('axios');
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 const cors = require('cors');
 
 app.use(cors());
 app.use(express.static(__dirname + '/build'));
 
 
-app.get('/api', (req, res) => {
+app.post('/', (req, res) => {
   axios.get('https://www.matara.pro/nedarimplus/online/Files/Manage.aspx', {
     params: {
       Action: 'GetMosad',
