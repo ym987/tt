@@ -3,13 +3,15 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import ProgressDisplay from "./progressDisplay";
 import MainProgress from "./mainProgress";
-
 
 const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
   const [open, setOpen] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
+  const [showFullScreenPrompt, setShowFullScreenPrompt] = useState(false);
 
   // Detect mouse position
   useEffect(() => {
@@ -25,6 +27,22 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  // Check if window is in full view mode
+  useEffect(() => {
+    const checkFullScreen = () => {
+      if (window.innerWidth < window.screen.width || window.innerHeight < window.screen.height) {
+        setShowFullScreenPrompt(true);
+      } else {
+        setShowFullScreenPrompt(false);
+      }
+    };
+
+    window.addEventListener("resize", checkFullScreen);
+    checkFullScreen();
+
+    return () => window.removeEventListener("resize", checkFullScreen);
+  }, []);
+
   const handleSignOut = () => {
     localStorage.removeItem("ttID");
     localStorage.removeItem("matchingId");
@@ -35,12 +53,12 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
 
   return (
     <>
-        <div style={{ position: "fixed", height: "100%", width: "25%",marginLeft: "75%" }}>
-          {ttID && <MainProgress ttID={ttID} mtchingId={mtchingId} />}
-        </div>
-        <div style={{ position: "fixed", height: "100%", width: "75%" }}>
-          {ttID && <ProgressDisplay ttID={ttID} />}
-        </div>
+      <div style={{ position: "fixed", height: "100%", width: "25%", marginLeft: "75%" }}>
+        {ttID && <MainProgress ttID={ttID} mtchingId={mtchingId} />}
+      </div>
+      <div style={{ position: "fixed", height: "100%", width: "75%" }}>
+        {ttID && <ProgressDisplay ttID={ttID} />}
+      </div>
 
       {/* Show button only when mouse is in the top-left corner */}
       {showLogout && (
@@ -63,6 +81,21 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
           </Button>
           <Button onClick={handleSignOut} color="secondary">
             התנתקות
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Full Screen Prompt Popup */}
+      <Dialog open={showFullScreenPrompt} onClose={() => setShowFullScreenPrompt(false)}>
+        <DialogTitle>הודעה</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            לחץ על F11 כדי לעבור למסך מלא
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowFullScreenPrompt(false)} color="primary">
+            סגור
           </Button>
         </DialogActions>
       </Dialog>

@@ -47,7 +47,7 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
       setttID(inputValue);
 
     } else {
-      alert("שגיאה בקבלת הנתונים");
+      alert("קוד מוסד לא תקין");
     }
   };
 
