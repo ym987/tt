@@ -4,7 +4,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 
 const ColorChangingComponent = ({ info }) => {
   const { Cumule = 0, Goal = 1, Name = "" } = info;
-  const progress = Math.floor((Cumule / Goal) * 100);
+  const progress = Goal !== "0" ? Math.floor((Cumule / Goal) * 100) : 100;
 
   const goal = info.Goal && Number(Goal).toLocaleString();
   const cumule = Cumule && Number(Cumule).toLocaleString();
