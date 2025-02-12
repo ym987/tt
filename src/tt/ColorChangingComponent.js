@@ -36,17 +36,18 @@ const ColorChangingComponent = ({ info }) => {
       }}
     >
       <div style={{ position: "relative", height: "100%" }}>
-        <h6
+        <div
           style={{
             fontFamily: "CustomFont",
             color: "black",
             fontSize: "1.8vw",
             margin: "1vh",
             align: "center",
+            lineHeight: "0.8em",
           }}
         >
           {Name.slice(0, 30)}
-        </h6>
+        </div>
 
         <div
           style={{
