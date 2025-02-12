@@ -30,6 +30,7 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
   // Check if window is in full view mode
   useEffect(() => {
     const checkFullScreen = () => {
+      
       if (
         window.innerWidth < window.screen.width ||
         window.innerHeight < window.screen.height
@@ -63,6 +64,8 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
     }
   };
 
+  
+
   return (
     <>
       <div
@@ -80,8 +83,7 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
       </div>
 
       {/* Show button only when mouse is in the top-left corner */}
-      {(showLogout || window.innerWidth < window.screen.width ||
-        window.innerHeight < window.screen.height) && (
+      {(showLogout || showFullScreenPrompt) && (
         <>
           <Button
             variant="contained"
