@@ -80,7 +80,8 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
       </div>
 
       {/* Show button only when mouse is in the top-left corner */}
-      {(showLogout || !document.fullscreenElement) && (
+      {(showLogout || window.innerWidth < window.screen.width ||
+        window.innerHeight < window.screen.height) && (
         <>
           <Button
             variant="contained"
