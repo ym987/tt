@@ -47,7 +47,7 @@ function MainProgress({ ttID, mtchingId }) {
   }, [mtchingId]);
 
   const progress = list.Donated && list.Goal ? Math.floor((list.Donated / list.Goal) * 100) : 0;
-  const goal = list.Goal ? Number(list.Goal * 10000).toLocaleString() : "0";
+  const goal = list.Goal ? Number(list.Goal).toLocaleString() : "0";
   const donated = list.Donated ? Number(list.Donated).toLocaleString() : "0";
 
   return (
