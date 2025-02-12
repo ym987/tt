@@ -6,18 +6,14 @@ import { styled } from "@mui/material/styles";
 import axios from "axios";
 import About from "./about";
 
-
 const Input = styled("input")({
   display: "none",
 });
 
-
 async function getCodeMossad(ttID) {
   try {
     const apiUrl = "https://tt-s1kv.onrender.com/";
-    const response = await axios.post(apiUrl, {params: {MosadId: ttID}
-      
-    });
+    const response = await axios.post(apiUrl, {ttID});
 
     if (response.data?.Matching) {
       return response.data.Matching.split(":")[1];
@@ -65,8 +61,6 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
       localStorage.setItem("matchingId", Matching); // Save to localStorage
       setMatchingId(Matching);
       setttID(inputValue);
-
-      
     } else {
       alert(`
         לא נמצא מצ'ינג עבור קוד מוסד ${inputValue}

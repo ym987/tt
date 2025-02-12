@@ -6,13 +6,16 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(express.static(__dirname + '/build'));
+app.use(express.json());
+
 
 
 app.post('/', (req, res) => {
+  console.log(req.body);
   axios.get('https://www.matara.pro/nedarimplus/online/Files/Manage.aspx', {
     params: {
       Action: 'GetMosad',
-      MosadId: req.query.MosadId,
+      MosadId: req.body.ttID,
       S: '',
       _: Date.now()
     },
