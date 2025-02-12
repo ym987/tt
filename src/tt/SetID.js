@@ -37,7 +37,7 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
 
     if (savedMatchingId) setMatchingId(savedMatchingId);
     if (savedTTID) setttID(savedTTID);
-  }, []);
+  }, [setMatchingId, setttID]);
 
   const handleSubmit = async () => {
     if (!inputValue) {
