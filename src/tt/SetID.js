@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import axios from "axios";
+import About from "./about";
+
+
+const Input = styled("input")({
+  display: "none",
+});
+
 
 async function getCodeMossad(ttID) {
   try {
@@ -21,7 +29,7 @@ async function getCodeMossad(ttID) {
 
 function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   const [inputValue, setInputValue] = useState(ttID);
-  // const [inputValue1, setInputValue1] = useState(mtchingId);
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const savedTTID = localStorage.getItem("ttID");
@@ -33,16 +41,30 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
 
   const handleSubmit = async () => {
     if (!inputValue) {
-      alert("נא הכנס את כל המידע");
+      alert("נא הכנס את קוד המוסד");
       return;
     }
 
     const Matching = await getCodeMossad(inputValue);
     if (Matching) {
+      if (file) {
+        const reader = new FileReader();
+        const fileReadPromise = new Promise((resolve, reject) => {
+          reader.onloadend = () => {
+            localStorage.setItem("uploadedImage", reader.result); // Save image to localStorage
+            resolve();
+          };
+          reader.onerror = reject;
+        });
+        reader.readAsDataURL(file);
+        await fileReadPromise;
+      }
       localStorage.setItem("ttID", inputValue); // Save to localStorage
       localStorage.setItem("matchingId", Matching); // Save to localStorage
       setMatchingId(Matching);
       setttID(inputValue);
+
+      
     } else {
       alert(`
         לא נמצא מצ'ינג עבור קוד מוסד ${inputValue}
@@ -67,15 +89,22 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
         value={inputValue}
       />
       <br />
-      {/* <TextField
-        onChange={(e) => setInputValue1(e.target.value)}
-        label="הכנס את הקוד של המצ'ינג"
-        value={inputValue1}
-      />
-      <br /> */}
+      <label htmlFor="contained-button-file">
+        <Input
+          accept="image/*"
+          id="contained-button-file"
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+        <Button variant="contained" component="span">
+          העלה תמונה
+        </Button>
+      </label>
+      <br />
       <Button variant="contained" onClick={handleSubmit}>
         שלח
       </Button>
+      <About />
     </div>
   );
 }

@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import Typography from "@mui/material/Typography";
 import ProgressBar from "@ramonak/react-progress-bar";
 import "./mainProgress.css";
 
 function MainProgress({ ttID, mtchingId }) {
   const [list, setList] = useState({});
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  useEffect(() => {
+    const savedImage = localStorage.getItem("uploadedImage");
+    if (savedImage) {
+      setUploadedImage(savedImage);
+    } else {
+      setUploadedImage(`https://images.matara.pro/ClientsImages/${ttID}.jpg?7`);
+    }
+  }, [ttID]);
 
   useEffect(() => {
     axios
@@ -14,8 +23,6 @@ function MainProgress({ ttID, mtchingId }) {
       )
       .then((response) => {
         setList(response.data);
-        // console.log(response.data);
-        // console.log(list);
       })
       .catch((error) => {
         console.log(error);
@@ -38,18 +45,18 @@ function MainProgress({ ttID, mtchingId }) {
     return () => clearInterval(interval);
   }, [mtchingId]);
 
-  const progress = Math.floor((list.Donated / list.Goal) * 100);
-  const goal = list.Goal && Number(list.Goal).toLocaleString();
-  const donated = list.Donated && Number(list.Donated).toLocaleString();
+  const progress = list.Donated && list.Goal ? Math.floor((list.Donated / list.Goal) * 100) : 0;
+  const goal = list.Goal ? Number(list.Goal).toLocaleString() : "0";
+  const donated = list.Donated ? Number(list.Donated).toLocaleString() : "0";
 
   return (
     <div className="main-progress">
-      
       {/* logo */}
       <img
         className="main-progress-image"
-        src={`https://images.matara.pro/ClientsImages/${ttID}.jpg?7`}
+        src={uploadedImage}
         alt="charity logo"
+        style={{ maxWidth: "25vw", maxHeight: "40vh", margin: "0 auto" }}
       />
 
       {/* stats */}
@@ -58,7 +65,7 @@ function MainProgress({ ttID, mtchingId }) {
         <div style={{ color: "gray" }}>{donated}</div>{" "}
         <div dir="rtl">מתוך:</div> {" "}
         <div style={{ color: "gray", fontSize: "2em" }}>{goal}</div>{""}
-        {Math.floor(progress)}%
+        {progress}%
       </div>
 
       {/* progress bar */}
@@ -67,9 +74,8 @@ function MainProgress({ ttID, mtchingId }) {
           completed={progress}
           bgColor="green"
           height="35px"
-          // margin="1px"
           isLabelVisible={true}
-          />
+        />
       </div>
     </div>
   );

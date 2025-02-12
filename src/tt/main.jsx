@@ -49,6 +49,7 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
   const handleSignOut = () => {
     localStorage.removeItem("ttID");
     localStorage.removeItem("matchingId");
+    localStorage.removeItem("uploadedImage");
     setttID("");
     setMatchingId("");
     setOpen(false);
