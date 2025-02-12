@@ -14,8 +14,8 @@ const Input = styled("input")({
 
 async function getCodeMossad(ttID) {
   try {
-    const apiUrl = "https://tt-s1kv.onrender.com/api";
-    const response = await axios.get(apiUrl, { params: { MosadId: ttID } });
+    const apiUrl = "https://tt-s1kv.onrender.com/api?MosadId=" + ttID;
+    const response = await axios.get(apiUrl);
 
     if (response.data?.Matching) {
       return response.data.Matching.split(":")[1];
