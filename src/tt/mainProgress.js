@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProgressBar from "@ramonak/react-progress-bar";
+import FittedText from "yarft";
 import "./mainProgress.css";
 
 function MainProgress({ ttID, mtchingId }) {
@@ -46,7 +47,7 @@ function MainProgress({ ttID, mtchingId }) {
   }, [mtchingId]);
 
   const progress = list.Donated && list.Goal ? Math.floor((list.Donated / list.Goal) * 100) : 0;
-  const goal = list.Goal ? Number(list.Goal).toLocaleString() : "0";
+  const goal = list.Goal ? Number(list.Goal * 10000).toLocaleString() : "0";
   const donated = list.Donated ? Number(list.Donated).toLocaleString() : "0";
 
   return (
@@ -64,7 +65,9 @@ function MainProgress({ ttID, mtchingId }) {
         <div dir="rtl">עד כה נתרם:</div>
         <div style={{ color: "gray" }}>{donated}</div>{" "}
         <div dir="rtl">מתוך:</div> {" "}
-        <div style={{ color: "gray", fontSize: "2em" }}>{goal}</div>{""}
+        <div style={{ color: "gray" }}>
+          <FittedText defaultFontSize={100}>{goal}</FittedText>
+        </div>{""}
         {progress}%
       </div>
 

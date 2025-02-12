@@ -30,6 +30,7 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   const [inputValue, setInputValue] = useState(ttID);
   const [file, setFile] = useState(null);
 
+  // load data from localStorage
   useEffect(() => {
     const savedTTID = localStorage.getItem("ttID");
     const savedMatchingId = localStorage.getItem("matchingId");
@@ -97,9 +98,10 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
           העלה תמונה
         </Button>
       </label>
+      {file && <div dir="rtl">תמונה נבחרה בהצלחה.</div>}
       <br />
       <Button variant="contained" onClick={handleSubmit}>
-        שלח
+        הכנס
       </Button>
       <About />
     </div>

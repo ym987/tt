@@ -4,7 +4,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 
 const ColorChangingComponent = ({ info }) => {
   const { Cumule = 0, Goal = 1, Name = "" } = info;
-  const progress = Math.floor((Cumule / Goal) * 100);
+  const progress = Goal !== "0" ? Math.floor((Cumule / Goal) * 100) : 100;
 
   const goal = info.Goal && Number(Goal).toLocaleString();
   const cumule = Cumule && Number(Cumule).toLocaleString();
@@ -36,17 +36,18 @@ const ColorChangingComponent = ({ info }) => {
       }}
     >
       <div style={{ position: "relative", height: "100%" }}>
-        <h6
+        <div
           style={{
             fontFamily: "CustomFont",
             color: "black",
             fontSize: "1.8vw",
             margin: "1vh",
             align: "center",
+            lineHeight: "0.8em",
           }}
         >
           {Name.slice(0, 30)}
-        </h6>
+        </div>
 
         <div
           style={{
