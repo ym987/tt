@@ -29,7 +29,6 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
 
     if (savedMatchingId) setMatchingId(savedMatchingId);
     if (savedTTID) setttID(savedTTID);
-
   }, []);
 
   const handleSubmit = async () => {
@@ -38,21 +37,30 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
       return;
     }
 
-
     const Matching = await getCodeMossad(inputValue);
     if (Matching) {
       localStorage.setItem("ttID", inputValue); // Save to localStorage
       localStorage.setItem("matchingId", Matching); // Save to localStorage
       setMatchingId(Matching);
       setttID(inputValue);
-
     } else {
-      alert("קוד מוסד לא תקין");
+      alert(`
+        לא נמצא מצ'ינג עבור קוד מוסד ${inputValue}
+        ניתן לנסות שוב או לפנות לתמיכה`);
     }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh", justifyContent: "center", alignItems: "center", gap: "16px",}}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "16px",
+      }}
+    >
       <TextField
         onChange={(e) => setInputValue(e.target.value)}
         label="הכנס את הקוד מוסד"

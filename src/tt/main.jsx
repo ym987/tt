@@ -30,7 +30,10 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
   // Check if window is in full view mode
   useEffect(() => {
     const checkFullScreen = () => {
-      if (window.innerWidth < window.screen.width || window.innerHeight < window.screen.height) {
+      if (
+        window.innerWidth < window.screen.width ||
+        window.innerHeight < window.screen.height
+      ) {
         setShowFullScreenPrompt(true);
       } else {
         setShowFullScreenPrompt(false);
@@ -53,7 +56,14 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
 
   return (
     <>
-      <div style={{ position: "fixed", height: "100%", width: "25%", marginLeft: "75%" }}>
+      <div
+        style={{
+          position: "fixed",
+          height: "100%",
+          width: "25%",
+          marginLeft: "75%",
+        }}
+      >
         {ttID && <MainProgress ttID={ttID} mtchingId={mtchingId} />}
       </div>
       <div style={{ position: "fixed", height: "100%", width: "75%" }}>
@@ -86,15 +96,21 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
       </Dialog>
 
       {/* Full Screen Prompt Popup */}
-      <Dialog open={showFullScreenPrompt} onClose={() => setShowFullScreenPrompt(false)}>
-        <DialogTitle>הודעה</DialogTitle>
+      <Dialog
+        open={showFullScreenPrompt}
+        onClose={() => setShowFullScreenPrompt(false)}
+      >
+        <DialogTitle dir="rtl">הודעה</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            לחץ על F11 כדי לעבור למסך מלא
+          <DialogContentText dir="ltr">
+            <span dir="rtl"> לחץ על F11 כדי לעבור למסך מלא</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowFullScreenPrompt(false)} color="primary">
+          <Button
+            onClick={() => setShowFullScreenPrompt(false)}
+            color="primary"
+          >
             סגור
           </Button>
         </DialogActions>
