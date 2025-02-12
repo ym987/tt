@@ -16,7 +16,7 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
   // Detect mouse position
   useEffect(() => {
     const handleMouseMove = (event) => {
-      if (event.clientX < 50 && event.clientY < 50) {
+      if (event.clientX < 50 && event.clientY < 100) {
         setShowLogout(true);
       } else {
         setShowLogout(false);
@@ -54,6 +54,14 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
     setOpen(false);
   };
 
+  const handleFullScreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  };
+
   return (
     <>
       <div
@@ -72,14 +80,24 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
 
       {/* Show button only when mouse is in the top-left corner */}
       {showLogout && (
-        <Button
-          variant="contained"
-          color="secondary"
-          style={{ position: "fixed", top: 10, left: 10 }}
-          onClick={() => setOpen(true)}
-        >
-          התנתקות
-        </Button>
+        <>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ position: "fixed", top: 10, left: 10 }}
+            onClick={() => setOpen(true)}
+          >
+            התנתקות
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ position: "fixed", top: 50, left: 10 }}
+            onClick={() => handleFullScreen()}
+          >
+            מסך מלא
+          </Button>
+        </>
       )}
 
       {/* Sign Out Confirmation Popup */}
@@ -103,7 +121,7 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
         <DialogTitle dir="rtl">הודעה</DialogTitle>
         <DialogContent>
           <DialogContentText dir="ltr">
-            <span dir="rtl"> לחץ על F11 כדי לעבור למסך מלא</span>
+            <span dir="rtl">  לחץ על F11 כדי לעבור למסך מלא</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
