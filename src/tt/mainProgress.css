@@ -15,6 +15,7 @@
 }
 
 .stats {
+  width: 100%;
   font-family: CustomFont; 
   text-align: center; 
   font-size: 4vw; 
