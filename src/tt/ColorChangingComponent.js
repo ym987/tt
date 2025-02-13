@@ -57,7 +57,7 @@ const ColorChangingComponent = ({ info }) => {
             transform: "translateX(-50%)",
             fontFamily: "CustomFont",
             color: "black",
-            fontSize: "1.5vw",
+            fontSize: "1.4vw",
             textAlign: "center",
             whiteSpace: "nowrap",
           }}
