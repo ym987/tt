@@ -14,7 +14,7 @@ async function getCodeMossad(ttID) {
   try {
     const apiUrl = "https://tt-s1kv.onrender.com/"; // For production on render
     // const apiUrl = "http://localhost:8080/"; // For local testing
-    const response = await axios.post(apiUrl, {ttID});
+    const response = await axios.post(apiUrl, { ttID });
 
     if (response.data?.Matching) {
       return response.data.Matching.split(":")[1];
@@ -29,6 +29,8 @@ async function getCodeMossad(ttID) {
 function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   const [inputValue, setInputValue] = useState(ttID);
   const [file, setFile] = useState(null);
+  const [buttonPosition, setButtonPosition] = useState({});
+
 
   // load data from localStorage
   useEffect(() => {
@@ -38,6 +40,16 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
     if (savedMatchingId) setMatchingId(savedMatchingId);
     if (savedTTID) setttID(savedTTID);
   }, [setMatchingId, setttID]);
+
+  const onMouseOver = () => {
+    if (inputValue) return;
+    const randomTop = Math.random() * 80 + 10 + "%";
+    const randomLeft = Math.random() * 80 + 10 + "%";
+    setButtonPosition({ top: randomTop, left: randomLeft });
+  };
+  const onMouseLeave = () => {
+    setTimeout(() => setButtonPosition({}), 1000);
+  };
 
   const handleSubmit = async () => {
     if (!inputValue) {
@@ -100,7 +112,14 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
       </label>
       {file && <div dir="rtl">תמונה נבחרה בהצלחה.</div>}
       <br />
-      <Button variant="contained" onClick={handleSubmit}>
+      <Button
+        variant="contained"
+        onClick={handleSubmit}
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
+        style={{ position: "absolute", ...buttonPosition }}
+
+      >
         הכנס
       </Button>
       <About />
