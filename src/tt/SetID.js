@@ -30,7 +30,7 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   const [inputValue, setInputValue] = useState(ttID);
   const [file, setFile] = useState(null);
   const [buttonPosition, setButtonPosition] = useState({});
-
+  const [label, setLabel] = useState("הכנס את הקוד מוסד");
 
   // load data from localStorage
   useEffect(() => {
@@ -45,10 +45,15 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
     if (inputValue) return;
     const randomTop = Math.random() * 80 + 10 + "%";
     const randomLeft = Math.random() * 80 + 10 + "%";
+    setLabel("?שכחת משהו");
     setButtonPosition({ top: randomTop, left: randomLeft });
   };
+
   const onMouseLeave = () => {
-    setTimeout(() => setButtonPosition({}), 1000);
+    setTimeout(() => {
+      setLabel("הכנס את הקוד מוסד");
+      setButtonPosition({});
+    }, 1000);
   };
 
   const handleSubmit = async () => {
@@ -95,7 +100,7 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
     >
       <TextField
         onChange={(e) => setInputValue(e.target.value)}
-        label="הכנס את הקוד מוסד"
+        label={label}
         value={inputValue}
       />
       <br />
@@ -118,7 +123,6 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
         style={{ position: "absolute", ...buttonPosition }}
-
       >
         הכנס
       </Button>
