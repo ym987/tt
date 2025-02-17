@@ -79,7 +79,7 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
         {ttID && <MainProgress ttID={ttID} mtchingId={mtchingId} />}
       </div>
       <div style={{ position: "fixed", height: "100%", width: "75%" }}>
-        {ttID && <ProgressDisplay ttID={ttID} />}
+        {ttID && <ProgressDisplay ttID={ttID} mtchingId={mtchingId} />}
       </div>
 
       {/* Show button only when mouse is in the top-left corner */}

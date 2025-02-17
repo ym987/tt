@@ -3,11 +3,12 @@ import ProgressBar from "@ramonak/react-progress-bar";
 // import Paper from "@mui/material/Paper";
 
 const ColorChangingComponent = ({ info }) => {
-  const { Cumule = 0, Goal = 1, Name = "" } = info;
-  const progress = Goal !== "0" ? Math.floor((Cumule / Goal) * 100) : 100;
+  let { Donated = 0, Goal = 1, Name = "" } = info;
+  const progress = Goal !== "0" ? Math.floor((Donated / Goal) * 100) : 100;
 
   const goal = info.Goal && Number(Goal).toLocaleString();
-  const cumule = Cumule && Number(Cumule).toLocaleString();
+  if(!Number(Donated)) Donated = 0;
+  const cumule = Donated && Number(Donated).toLocaleString();
 
   // const Item = styled(Paper)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

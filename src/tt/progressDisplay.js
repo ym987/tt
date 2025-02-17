@@ -1,27 +1,31 @@
 import { useState, useEffect } from "react";
 // import axios from "axios";
+import axiosInstance from "./axiosConfig";
 import ColorChangingComponent from "./ColorChangingComponent";
 // import Grid from "@mui/material/Grid";
 // import Paper from "@mui/material/Paper";
 
-function ProgressDisplay({ ttID }) {
+function ProgressDisplay({ mtchingId, ttID }) {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const amountToDisplay = 20;
 
-  const url = `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=SearchMatrim&Name=&MosadId=${ttID}`;
 
   // fetches data at first render, and again every minute
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Call your API here and update the list
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setList(data);
+        const response = await axiosInstance.post("/getPersonalProgress", {
+          campaignId: mtchingId,
+        });
+        // if (!response.ok) {
+        //   throw new Error("Network response was not ok");
+        // }
+        const data = await response.data;
+        console.log(data?.d);
+        
+        setList(data?.d);
       } catch (error) {
         console.error("There was a problem with your fetch operation:", error);
       }
@@ -29,10 +33,10 @@ function ProgressDisplay({ ttID }) {
 
     fetchData(); // Initial fetch
 
-    const fetchInterval = setInterval(fetchData, 60000); // Fetch data every minute
+    const fetchInterval = setInterval(fetchData, 600000); // Fetch data every 10 minutes
 
     return () => clearInterval(fetchInterval); // Cleanup interval on component unmount
-  }, [ttID, url]);
+  }, [ttID]);
 
   // refresh the grid with new donors every 10 seconds
   useEffect(() => {

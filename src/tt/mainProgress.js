@@ -1,54 +1,67 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import ProgressBar from "@ramonak/react-progress-bar";
 import FittedText from "yarft";
 import "./mainProgress.css";
+import axiosInstance from "./axiosConfig";
 
 function MainProgress({ ttID, mtchingId }) {
   const [list, setList] = useState({});
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const savedImage = localStorage.getItem("uploadedImage");
     if (savedImage) {
       setUploadedImage(savedImage);
     } else {
-      setUploadedImage(`https://images.matara.pro/ClientsImages/${ttID}.jpg?7`);
+      setUploadedImage(
+        `https://ftp.kesherhk.co.il:3380/ftp/kehilot/${ttID}.png`
+      );
     }
   }, [ttID]);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`
-      )
+    axiosInstance
+      .post("/getMainProgress", { projectId: ttID })
       .then((response) => {
-        setList(response.data);
+        const arr = response.data?.d;
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i]?.CampaignId === mtchingId) {
+            setIndex(i);
+            setList(arr[i].CampaignSettings);
+            break;
+          }
+        }
+        console.log(arr);
+        
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [mtchingId]);
+  }, [ttID, mtchingId]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      axios
-        .get(
-          `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`
-        )
+      axiosInstance
+        .post("/getMainProgress", { projectId: ttID })
         .then((response) => {
-          setList(response.data);
+          setList(response.data?.d[index].CampaignSettings);
         })
         .catch((error) => {
           console.log(error);
         });
-    }, 30000);
+    }, 600000);
     return () => clearInterval(interval);
-  }, [mtchingId]);
+  }, [ttID, index]);
 
-  const progress = list.Donated && list.Goal ? Math.floor((list.Donated / list.Goal) * 100) : 0;
-  const goal = list.Goal ? Number(list.Goal).toLocaleString() : "0";
-  const donated = list.Donated ? Number(list.Donated).toLocaleString() : "0";
+  const progress =
+    list.Total && list.TargetAmount
+      ? Math.floor((list.Total / list.TargetAmount) * 100)
+      : 0;
+  const goal = list.TargetAmount
+    ? Number(list.TargetAmount).toLocaleString()
+    : "0";
+  const donated = list.Total ? Number(list.Total).toLocaleString() : "0";
 
   return (
     <div className="main-progress">
@@ -64,10 +77,11 @@ function MainProgress({ ttID, mtchingId }) {
       <div className="stats">
         <div dir="rtl">עד כה נתרם:</div>
         <div style={{ color: "gray" }}>{donated}</div>{" "}
-        <div dir="rtl">מתוך:</div> {" "}
+        <div dir="rtl">מתוך:</div>{" "}
         <div style={{ color: "gray" }}>
           <FittedText defaultFontSize={100}>{goal}</FittedText>
-        </div>{""}
+        </div>
+        {""}
         {progress}%
       </div>
 

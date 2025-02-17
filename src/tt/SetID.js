@@ -10,24 +10,11 @@ const Input = styled("input")({
   display: "none",
 });
 
-async function getCodeMossad(ttID) {
-  try {
-    const apiUrl = "https://tt-s1kv.onrender.com/"; // For production on render
-    // const apiUrl = "http://localhost:8080/"; // For local testing
-    const response = await axios.post(apiUrl, {ttID});
 
-    if (response.data?.Matching) {
-      return response.data.Matching.split(":")[1];
-    }
-    return null;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-}
 
 function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   const [inputValue, setInputValue] = useState(ttID);
+  const [inputValue1, setInputValue1] = useState(ttID);
   const [file, setFile] = useState(null);
 
   // load data from localStorage
@@ -40,34 +27,26 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   }, [setMatchingId, setttID]);
 
   const handleSubmit = async () => {
+    // if(!inputValue && !inputValue1){
+    //   setttID("50728");
+    //   setMatchingId("1405");
+    //   return;
+    // }
     if (!inputValue) {
       alert("נא הכנס את קוד המוסד");
       return;
     }
 
-    const Matching = await getCodeMossad(inputValue);
-    if (Matching) {
-      if (file) {
-        const reader = new FileReader();
-        const fileReadPromise = new Promise((resolve, reject) => {
-          reader.onloadend = () => {
-            localStorage.setItem("uploadedImage", reader.result); // Save image to localStorage
-            resolve();
-          };
-          reader.onerror = reject;
-        });
-        reader.readAsDataURL(file);
-        await fileReadPromise;
-      }
-      localStorage.setItem("ttID", inputValue); // Save to localStorage
-      localStorage.setItem("matchingId", Matching); // Save to localStorage
-      setMatchingId(Matching);
-      setttID(inputValue);
-    } else {
-      alert(`
-        לא נמצא מצ'ינג עבור קוד מוסד ${inputValue}
-        ניתן לנסות שוב או לפנות לתמיכה`);
+    if (!inputValue1) {
+      alert("נא הכנס את קוד המגבית");
+      return;
     }
+    // save data to localStorage
+    localStorage.setItem("ttID", inputValue);
+    localStorage.setItem("matchingId", inputValue1);
+
+    setttID(inputValue);
+    setMatchingId(inputValue1);   
   };
 
   return (
@@ -85,6 +64,12 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
         onChange={(e) => setInputValue(e.target.value)}
         label="הכנס את הקוד מוסד"
         value={inputValue}
+      />
+      <br />
+      <TextField
+        onChange={(e) => setInputValue1(e.target.value)}
+        label="הכנס את הקוד מגבית"
+        value={inputValue1}
       />
       <br />
       <label htmlFor="contained-button-file">
