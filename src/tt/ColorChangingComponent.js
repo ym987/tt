@@ -44,6 +44,7 @@ const ColorChangingComponent = ({ info }) => {
             margin: "1vh",
             align: "center",
             lineHeight: "0.8em",
+            direction: "rtl",
           }}
         >
           {Name.slice(0, 30)}
