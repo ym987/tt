@@ -3,7 +3,6 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import axios from "axios";
 import About from "./about";
 
 const Input = styled("input")({
@@ -27,11 +26,11 @@ function SetID({ ttID, setttID, mtchingId, setMatchingId }) {
   }, [setMatchingId, setttID]);
 
   const handleSubmit = async () => {
-    // if(!inputValue && !inputValue1){
-    //   setttID("50728");
-    //   setMatchingId("1405");
-    //   return;
-    // }
+    if(!inputValue && !inputValue1){
+      setttID("50728");
+      setMatchingId("2176");
+      return;
+    }
     if (!inputValue) {
       alert("נא הכנס את קוד המוסד");
       return;

@@ -9,15 +9,13 @@ app.use(express.static(__dirname + "/build"));
 app.use(express.json());
 
 app.post("/getMainProgress", (req, res) => {
-  const url =
-    `https://www.kesherhk.info/kehilot/Default.aspx/get_internal_labels?projectId=%27${req.body.projectId}%27`;
-  
+  const url = `https://www.kesherhk.info/kehilot/Default.aspx/get_internal_labels?projectId=%27${req.body.projectId}%27`;
+
   console.log(req.body);
   axios
     .get(url, {
       headers: {
         "Content-Type": "application/json",
-        
       },
     })
     .then((response) => {
@@ -28,20 +26,16 @@ app.post("/getMainProgress", (req, res) => {
     });
 });
 app.post("/getPersonalProgress", (req, res) => {
-  
-  const url =
-    `https://www.kesherhk.info/kehilot/Default.aspx/get_teams_of_campaign?campaignId=%27$({req.body.campaignId})%27&teamId=%27%27`;
+  const url = `https://www.kesherhk.info/kehilot/Default.aspx/get_teams_of_campaign?campaignId=%27${req.body.campaignId}%27&teamId=%27%27`;
 
   console.log(req.body);
   axios
     .get(url, {
       headers: {
         "Content-Type": "application/json",
-        
       },
     })
     .then((response) => {
-      
       res.send(response.data);
     })
     .catch((error) => {

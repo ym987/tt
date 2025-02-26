@@ -26,8 +26,13 @@ function MainProgress({ ttID, mtchingId }) {
       .then((response) => {
         const arr = response.data?.d;
         for (let i = 0; i < arr.length; i++) {
-          if (arr[i]?.CampaignId === mtchingId) {
+          // console.log("CampaignId type: ", typeof arr[i]?.CampaignId);
+          // console.log("mtchingId type: ", typeof mtchingId);
+          
+          if (String(arr[i]?.CampaignId) === mtchingId) {
             setIndex(i);
+            // console.log("index", i);
+            // console.log(arr[i].CampaignSettings);
             setList(arr[i].CampaignSettings);
             break;
           }

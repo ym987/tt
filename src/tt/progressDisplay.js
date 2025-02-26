@@ -25,7 +25,7 @@ function ProgressDisplay({ mtchingId, ttID }) {
         const data = await response.data;
         console.log(data?.d);
         
-        setList(data?.d);
+        setList(data?.d || data);
       } catch (error) {
         console.error("There was a problem with your fetch operation:", error);
       }
