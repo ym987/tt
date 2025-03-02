@@ -10,7 +10,7 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
+// console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
 
 async function createLogsTable() {
@@ -34,18 +34,18 @@ app.use(cors());
 app.use(express.static(__dirname + "/build"));
 app.use(express.json());
 
-app.get("/logs", async (req, res) => {
-  const result = await pool.query("SELECT * FROM logs");
-  res.json(result.rows);
-});
+// app.get("/logs", async (req, res) => {
+//   const result = await pool.query("SELECT * FROM logs");
+//   res.json(result.rows);
+// });
 
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
   console.log(req.body);
 
   //write to PostgreSQL
-  const ttID = req.body.ttID;
-  createLogsTable();
-  saveLog(ttID);
+  // const ttID = req.body.ttID;
+  // await createLogsTable();
+  // saveLog(ttID);
 
   axios
     .get("https://www.matara.pro/nedarimplus/online/Files/Manage.aspx", {
