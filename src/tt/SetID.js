@@ -15,9 +15,6 @@ async function getCodeMossad(ttID) {
     const apiUrl = "https://tt-s1kv.onrender.com/"; // For production on render
     // const apiUrl = "http://localhost:8080/"; // For local testing
     const response = await axios.post(apiUrl, {ttID});
-    console.log(response.data);
-    
-
     if (response.data?.Matching) {
       localStorage.setItem("MatchingType", response.data.Matching.split(":")[0]);
       return response.data.Matching.split(":")[1];

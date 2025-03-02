@@ -51,6 +51,7 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
     localStorage.removeItem("ttID");
     localStorage.removeItem("matchingId");
     localStorage.removeItem("uploadedImage");
+    localStorage.removeItem("MatchingType");
     setttID("");
     setMatchingId("");
     setOpen(false);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 import ProgressBar from "@ramonak/react-progress-bar";
 import FittedText from "yarft";
@@ -6,6 +6,10 @@ import "./mainProgress.css";
 
 const getProgress = async (mtchingId) => {
   let url;
+  const obj = {
+    Goal: 0,
+    Donated: 0,
+  };
   const matchingType = localStorage.getItem("MatchingType");
   if (matchingType === "Nedarim") {
     url = `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`;
@@ -16,7 +20,19 @@ const getProgress = async (mtchingId) => {
   }
   try {
     const response = await axios.get(url);
-    return response.data;
+    if (response.data) {
+      if (matchingType === "Nedarim") {
+        obj.Goal = response.data.Goal;
+        obj.Donated = response.data.Donated;
+      } else if (matchingType === "Metchy") {
+        obj.Goal = response.data.data[0].campaign_goal;
+        obj.Donated = response.data.data[0].total_amount;
+      } else {
+        obj.Goal = response.data.Goal;
+        obj.Donated = response.data.Donated;
+      }
+    }
+    return obj;
   } catch (error) {
     console.error("Error fetching progress data:", error);
     return null;
@@ -37,9 +53,13 @@ function MainProgress({ ttID, mtchingId }) {
   }, [ttID]);
 
   const fetchProgress = useCallback(async () => {
-    const data = await getProgress(mtchingId);
-    if (data) {
-      setList(data);
+    try {
+      const data = await getProgress(mtchingId);
+      if (data) {
+        setList(data);
+      }
+    } catch (error) {
+      console.error("Error fetching progress:", error);
     }
   }, [mtchingId]);
 
@@ -53,9 +73,9 @@ function MainProgress({ ttID, mtchingId }) {
   }, [fetchProgress]);
 
   const { Donated, Goal } = list;
-  const progress = Donated && Goal ? Math.floor((Donated / Goal) * 100) : 0;
-  const goal = Goal ? Number(Goal).toLocaleString() : "0";
-  const donated = Donated ? Number(Donated).toLocaleString() : "0";
+  const progress = useMemo(() => (Donated && Goal ? Math.floor((Donated / Goal) * 100) : 0), [Donated, Goal]);
+  const goal = useMemo(() => (Goal ? Number(Goal).toLocaleString() : "0"), [Goal]);
+  const donated = useMemo(() => (Donated ? Number(Donated).toLocaleString() : "0"), [Donated]);
 
   return (
     <div className="main-progress">
