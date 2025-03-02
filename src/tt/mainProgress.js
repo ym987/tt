@@ -1,8 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import ProgressBar from "@ramonak/react-progress-bar";
 import FittedText from "yarft";
 import "./mainProgress.css";
+
+const getProgress = async (mtchingId) => {
+  let url;
+  const matchingType = localStorage.getItem("MatchingType");
+  if (matchingType === "Nedarim") {
+    url = `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`;
+  } else if (matchingType === "Metchy") {
+    url = `https://metchy.com/api/campaign/${mtchingId}/total`;
+  } else {
+    url = `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`;
+  }
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching progress data:", error);
+    return null;
+  }
+};
 
 function MainProgress({ ttID, mtchingId }) {
   const [list, setList] = useState({});
@@ -17,38 +36,26 @@ function MainProgress({ ttID, mtchingId }) {
     }
   }, [ttID]);
 
-  useEffect(() => {
-    axios
-      .get(
-        `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`
-      )
-      .then((response) => {
-        setList(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const fetchProgress = useCallback(async () => {
+    const data = await getProgress(mtchingId);
+    if (data) {
+      setList(data);
+    }
   }, [mtchingId]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      axios
-        .get(
-          `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=ShowGoal&MatchingId=${mtchingId}`
-        )
-        .then((response) => {
-          setList(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, 30000);
+    fetchProgress();
+  }, [fetchProgress]);
+
+  useEffect(() => {
+    const interval = setInterval(fetchProgress, 30000);
     return () => clearInterval(interval);
-  }, [mtchingId]);
+  }, [fetchProgress]);
 
-  const progress = list.Donated && list.Goal ? Math.floor((list.Donated / list.Goal) * 100) : 0;
-  const goal = list.Goal ? Number(list.Goal).toLocaleString() : "0";
-  const donated = list.Donated ? Number(list.Donated).toLocaleString() : "0";
+  const { Donated, Goal } = list;
+  const progress = Donated && Goal ? Math.floor((Donated / Goal) * 100) : 0;
+  const goal = Goal ? Number(Goal).toLocaleString() : "0";
+  const donated = Donated ? Number(Donated).toLocaleString() : "0";
 
   return (
     <div className="main-progress">
@@ -63,11 +70,11 @@ function MainProgress({ ttID, mtchingId }) {
       {/* stats */}
       <div className="stats">
         <div dir="rtl">עד כה נתרם:</div>
-        <div style={{ color: "gray" }}>{donated}</div>{" "}
-        <div dir="rtl">מתוך:</div> {" "}
+        <div style={{ color: "gray" }}>{donated}</div>
+        <div dir="rtl">מתוך:</div>
         <div style={{ color: "gray" }}>
           <FittedText defaultFontSize={100}>{goal}</FittedText>
-        </div>{""}
+        </div>
         {progress}%
       </div>
 
