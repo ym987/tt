@@ -1,62 +1,51 @@
 const express = require("express");
 const axios = require("axios");
-const fs = require("fs");
+const { Pool } = require("pg");
 const app = express();
 const port = process.env.PORT || 8080;
 const cors = require("cors");
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+
+
+async function createLogsTable() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS logs (
+          id SERIAL PRIMARY KEY,
+          ttID TEXT NOT NULL unique,
+      );
+  `);
+  } catch (error) {
+    console.error("Error creating table:", error);
+  }
+}
+
+async function saveLog(ttID) {
+  await pool.query("INSERT INTO logs (ttID) VALUES ($1)", [ttID]);
+}
 
 app.use(cors());
 app.use(express.static(__dirname + "/build"));
 app.use(express.json());
 
-app.get("/getLogin", (req, res) => {
-  res.sendFile(__dirname + "/requestBody.json");
+app.get("/logs", async (req, res) => {
+  const result = await pool.query("SELECT * FROM logs");
+  res.json(result.rows);
 });
 
 app.post("/", (req, res) => {
   console.log(req.body);
 
-  // Read the existing content of the file
-  fs.readFile("requestBody.json", "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading file", err);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    let jsonData = [];
-    if (data) {
-      try {
-        jsonData = JSON.parse(data);
-        if (!Array.isArray(jsonData)) {
-          jsonData = [];
-        }
-      } catch (parseErr) {
-        console.error("Error parsing JSON", parseErr);
-        return res.status(500).send("Internal Server Error");
-      }
-    }
-    // check if the request body is already in the file
-    const existingData = jsonData.find((item) => item.ttID === req.body.ttID);
-    if (existingData === undefined) {
-      // Append the new data
-      jsonData.push(req.body);
-
-      // Save the updated content back to the file
-      fs.writeFile(
-        "requestBody.json",
-        JSON.stringify(jsonData, null, 2),
-        (err) => {
-          if (err) {
-            console.error("Error writing to file", err);
-            return res.status(500).send("Internal Server Error");
-          } else {
-            // console.log("Request body appended to requestBody.json");
-            // res.send('Data received and appended');
-          }
-        }
-      );
-    }
-  });
+  //write to PostgreSQL
+  const ttID = req.body.ttID;
+  createLogsTable();
+  saveLog(ttID);
 
   axios
     .get("https://www.matara.pro/nedarimplus/online/Files/Manage.aspx", {
