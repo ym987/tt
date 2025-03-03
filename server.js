@@ -26,6 +26,7 @@ async function createLogsTable() {
 }
 
 async function saveLog(ttID) {
+  console.log("Saving log for ttID:", ttID);
   await pool.query("INSERT INTO logs (ttID) VALUES ($1)", [ttID]);
 }
 
@@ -51,9 +52,10 @@ app.get("/logs", async (req, res) => {
 
 app.post("/", async (req, res) => {
   console.log(req.body);
+  
 
   //write to PostgreSQL
-  const ttID = req.body.ttID;
+  const ttID = req.body.ttID||"";
   try {
     await createLogsTable();
     await saveLog(ttID);
