@@ -1,49 +1,18 @@
 const express = require("express");
 const axios = require("axios");
-const { Pool } = require("pg");
 const app = express();
 const port = process.env.PORT || 8080;
 const cors = require("cors");
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
-
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
-
-async function createLogsTable() {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS logs (
-          id SERIAL PRIMARY KEY,
-          ttID TEXT NOT NULL UNIQUE
-      );
-    `);
-  } catch (error) {
-    console.error("Error creating table:", error);
-  }
-}
-
-async function saveLog(ttID) {
-  console.log("Saving log for ttID:", ttID);
-  await pool.query("INSERT INTO logs (ttID) VALUES ($1)", [ttID]);
-}
-
+const { saveLog, getLogs } = require("./DB");
 app.use(cors());
 app.use(express.static(__dirname + "/build"));
 app.use(express.json());
 
 app.get("/logs", async (req, res) => {
+  console.log("Fetching logs...");
   try {
-    await createLogsTable();
-  } catch (error) {
-    console.error("Error creating table:", error);
-    return res.status(500).send("Error creating table");
-  }
-  try {
-    const result = await pool.query("SELECT * FROM logs");
-    res.json(result.rows);
+    const result = await getLogs();
+    res.json(result);
   } catch (error) {
     console.error("Error fetching logs:", error);
     res.status(500).send("Error fetching logs");
@@ -57,11 +26,9 @@ app.post("/", async (req, res) => {
   //write to PostgreSQL
   const ttID = req.body.ttID||"";
   try {
-    await createLogsTable();
     await saveLog(ttID);
   } catch (error) {
     console.error("Error saving log:", error);
-    return res.status(500).send("Error saving log");
   }
 
   axios
