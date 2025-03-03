@@ -38,6 +38,7 @@ async function getLogs() {
     await createLogsTable();
     const result = await pool.query("SELECT * FROM logs");
     console.log("result.rows: ", result.rows);
+    result.rows.push({ id: 1, ttid: "123456789" });
     
     console.log("Logs fetched successfully.");
     return result.rows;
