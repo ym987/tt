@@ -24,12 +24,12 @@ app.post("/", async (req, res) => {
   
 
   //write to PostgreSQL
-  const ttID = req.body.ttID||"";
-  try {
-    await saveLog(ttID);
-  } catch (error) {
-    console.error("Error saving log:", error);
-  }
+  // const ttID = req.body.ttID||"";
+  // try {
+  //   await saveLog(ttID);
+  // } catch (error) {
+  //   console.error("Error saving log:", error);
+  // }
 
   axios
     .get("https://www.matara.pro/nedarimplus/online/Files/Manage.aspx", {
