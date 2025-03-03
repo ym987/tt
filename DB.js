@@ -33,6 +33,8 @@ async function saveLog(ttID) {
   }
 }
 
+saveLog("test");
+
 async function getLogs() {
   try {
     await createLogsTable();
