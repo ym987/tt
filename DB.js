@@ -15,7 +15,7 @@ async function createLogsTable() {
           ttID TEXT NOT NULL UNIQUE
       );
     `);
-    console.log("Logs table created or already exists.");
+    // console.log("Logs table created or already exists.");
   } catch (error) {
     console.error("Error creating table:", error);
   }
@@ -24,10 +24,10 @@ async function createLogsTable() {
 async function saveLog(ttID) {
   try {
     await createLogsTable();
-    console.log("Saving log for ttID:", ttID);
+    // console.log("Saving log for ttID:", ttID);
     const queryText = "INSERT INTO logs (ttID) VALUES ($1) ON CONFLICT (ttID) DO NOTHING";
     await pool.query(queryText, [ttID]);
-    console.log("Log saved successfully.");
+    // console.log("Log saved successfully.");
   } catch (error) {
     console.error("Error saving to table:", error);
   }
@@ -37,7 +37,7 @@ async function getLogs() {
   try {
     await createLogsTable();
     const result = await pool.query("SELECT * FROM logs");
-    console.log("result.rows: ", result.rows);    
+    // console.log("result.rows: ", result.rows);    
     console.log("Logs fetched successfully.");
     return result.rows;
   } catch (error) {
