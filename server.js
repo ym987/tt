@@ -10,17 +10,16 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-// console.log("DATABASE_URL:", process.env.DATABASE_URL);
-
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
 async function createLogsTable() {
   try {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS logs (
           id SERIAL PRIMARY KEY,
-          ttID TEXT NOT NULL unique,
+          ttID TEXT NOT NULL UNIQUE
       );
-  `);
+    `);
   } catch (error) {
     console.error("Error creating table:", error);
   }
@@ -34,18 +33,34 @@ app.use(cors());
 app.use(express.static(__dirname + "/build"));
 app.use(express.json());
 
-// app.get("/logs", async (req, res) => {
-//   const result = await pool.query("SELECT * FROM logs");
-//   res.json(result.rows);
-// });
+app.get("/logs", async (req, res) => {
+  try {
+    await createLogsTable();
+  } catch (error) {
+    console.error("Error creating table:", error);
+    return res.status(500).send("Error creating table");
+  }
+  try {
+    const result = await pool.query("SELECT * FROM logs");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching logs:", error);
+    res.status(500).send("Error fetching logs");
+  }
+});
 
 app.post("/", async (req, res) => {
   console.log(req.body);
 
   //write to PostgreSQL
-  // const ttID = req.body.ttID;
-  // await createLogsTable();
-  // saveLog(ttID);
+  const ttID = req.body.ttID;
+  try {
+    await createLogsTable();
+    await saveLog(ttID);
+  } catch (error) {
+    console.error("Error saving log:", error);
+    return res.status(500).send("Error saving log");
+  }
 
   axios
     .get("https://www.matara.pro/nedarimplus/online/Files/Manage.aspx", {
@@ -79,6 +94,7 @@ app.post("/", async (req, res) => {
     })
     .catch((error) => {
       console.error(error);
+      res.status(500).send("Error fetching data from external API");
     });
 });
 
