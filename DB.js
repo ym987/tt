@@ -37,6 +37,8 @@ async function getLogs() {
   try {
     await createLogsTable();
     const result = await pool.query("SELECT * FROM logs");
+    console.log("result.rows: ", result.rows);
+    
     console.log("Logs fetched successfully.");
     return result.rows;
   } catch (error) {
