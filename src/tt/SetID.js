@@ -14,10 +14,12 @@ async function getCodeMossad(ttID) {
   try {
     const apiUrl = "https://tt-s1kv.onrender.com/"; // For production on render
     // const apiUrl = "http://localhost:8080/"; // For local testing
-    const response = await axios.post(apiUrl, {ttID});
+    const response = await axios.post(apiUrl, {ttID});    
     if (response.data?.Matching) {
       localStorage.setItem("MatchingType", response.data.Matching.split(":")[0]);
-      return response.data.Matching.split(":")[1];
+      const Matching = response.data.Matching.split(":")[1];
+      const ttID = response.data.MosadNumber;
+      return {Matching, ttID};
     }
     return null;
   } catch (error) {
@@ -45,7 +47,7 @@ function SetID({ ttID, setttID, setMatchingId }) {
       return;
     }
 
-    const Matching = await getCodeMossad(inputValue);
+    const {Matching, ttID} = await getCodeMossad(inputValue);
     if (Matching) {
       if (file) {
         const reader = new FileReader();
@@ -59,10 +61,11 @@ function SetID({ ttID, setttID, setMatchingId }) {
         reader.readAsDataURL(file);
         await fileReadPromise;
       }
-      localStorage.setItem("ttID", inputValue); // Save to localStorage
+      
+      localStorage.setItem("ttID", ttID||inputValue); // Save to localStorage
       localStorage.setItem("matchingId", Matching); // Save to localStorage
       setMatchingId(Matching);
-      setttID(inputValue);
+      setttID(ttID||inputValue);
     } else {
       alert(`
         לא נמצא מצ'ינג עבור קוד מוסד ${inputValue}
