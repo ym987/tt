@@ -1,8 +1,36 @@
 import { useState, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
 import ColorChangingComponent from "./ColorChangingComponent";
 // import Grid from "@mui/material/Grid";
 // import Paper from "@mui/material/Paper";
+
+function getInfoForAllLetters(ttID) {
+  const startNum = 144;
+  const data = [];
+  for (let i = 0; i < 27; i++) {
+    const url = `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=SearchMatrim&Name=%D7%${
+      (144 + i).toString(16).toUpperCase()
+    }&MosadId=${ttID}`;
+    console.log((startNum+i).toString(16).toUpperCase());
+    
+    axios
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        if(response.data.Status === "Error") {
+          console.error("Error fetching data:", response.data.Message);
+          return;
+        }
+        
+        data.push(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  console.log(data);
+  
+}
 
 function ProgressDisplay({ ttID }) {
   const [list, setList] = useState([]);
@@ -16,6 +44,7 @@ function ProgressDisplay({ ttID }) {
     const fetchData = async () => {
       try {
         // Call your API here and update the list
+        getInfoForAllLetters(ttID);
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -36,12 +65,12 @@ function ProgressDisplay({ ttID }) {
 
   // refresh the grid with new donors every 10 seconds
   useEffect(() => {
-    const incrementCount = function() {
+    const incrementCount = function () {
       setCount(
         (prevCount) =>
           (prevCount + 1) % Math.ceil(list.length / amountToDisplay)
       );
-    }
+    };
 
     const refreshTime = 10000; // Refresh every 10 seconds
     const displayInterval = setInterval(incrementCount, refreshTime);
