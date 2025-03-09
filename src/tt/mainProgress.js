@@ -84,7 +84,7 @@ function MainProgress({ ttID, mtchingId }) {
         className="main-progress-image"
         src={uploadedImage}
         alt="charity logo"
-        style={{ maxWidth: "25vw", maxHeight: "40vh", margin: "0 auto" }}
+        style={{ maxWidth: "30vw", maxHeight: "40vh", margin: "0 auto" }}
       />
 
       {/* stats */}

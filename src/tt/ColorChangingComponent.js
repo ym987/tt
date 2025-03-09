@@ -31,7 +31,7 @@ const ColorChangingComponent = ({ info }) => {
         borderRadius: "1vh",
         boxShadow: "0 0.2vh 0.4vh rgba(0, 0, 0, 0.1)",
         width: `16.5vw`,
-        height: `16vh`,
+        height: `10vh`,
         padding: "0.5vh",
       }}
     >

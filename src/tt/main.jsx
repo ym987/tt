@@ -73,13 +73,13 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
         style={{
           position: "fixed",
           height: "100%",
-          width: "25%",
-          marginLeft: "75%",
+          width: "30%",
+          marginLeft: "70%",
         }}
       >
         {ttID && <MainProgress ttID={ttID} mtchingId={mtchingId} />}
       </div>
-      <div style={{ position: "fixed", height: "100%", width: "75%" }}>
+      <div style={{ position: "fixed", height: "100%", width: "70%" }}>
         {ttID && <ProgressDisplay ttID={ttID} />}
       </div>
 

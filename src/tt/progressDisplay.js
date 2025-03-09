@@ -7,7 +7,7 @@ import ColorChangingComponent from "./ColorChangingComponent";
 function ProgressDisplay({ ttID }) {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
-  const amountToDisplay = 20;
+  const amountToDisplay = 21;
 
   const url = `https://www.matara.pro/nedarimplus/V6/MatchPlus.aspx?Action=SearchMatrim&Name=&MosadId=${ttID}`;
 
@@ -60,7 +60,7 @@ function ProgressDisplay({ ttID }) {
         width: "100%", // Ensure the parent container takes full width
         height: "100%", // Allow height to adjust based on content
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
+        gridTemplateColumns: "repeat(3, 1fr)",
       }}
     >
       {listToDisplay.map((info, i) => (
