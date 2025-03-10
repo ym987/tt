@@ -57,29 +57,30 @@ function MainProgress({ ttID, mtchingId }) {
         className="main-progress-image"
         src={uploadedImage}
         alt="charity logo"
-        style={{ maxWidth: "25vw", maxHeight: "40vh", margin: "0 auto" }}
       />
 
       {/* stats */}
       <div className="stats">
-        <div dir="rtl">עד כה נתרם:</div>
-        <div style={{ color: "gray" }}>{donated}</div>{" "}
-        <div dir="rtl">מתוך:</div> {" "}
-        <div style={{ color: "gray" }}>
-          <FittedText defaultFontSize={100}>{goal}</FittedText>
-        </div>{""}
-        {progress}%
+        <div className="custom-font">
+          <div dir="rtl">עד כה נתרם:</div>
+          <div style={{ color: "gray" }}>{donated}</div>{" "}
+          <div dir="rtl">מתוך:</div> {" "}
+          <div style={{ color: "gray" }}>
+            <FittedText defaultFontSize={100}>{goal}</FittedText>
+          </div>{""}
+          {progress}%          
+        </div>
+        {/* progress bar */}
+        <div className="progress-bar">
+          <ProgressBar
+            completed={progress}
+            bgColor="green"
+            height="35px"
+            isLabelVisible={true}
+          />
+        </div>
       </div>
 
-      {/* progress bar */}
-      <div className="progress-bar">
-        <ProgressBar
-          completed={progress}
-          bgColor="green"
-          height="35px"
-          isLabelVisible={true}
-        />
-      </div>
     </div>
   );
 }

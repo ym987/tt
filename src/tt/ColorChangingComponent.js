@@ -30,8 +30,8 @@ const ColorChangingComponent = ({ info }) => {
         border: "0.1vh solid #ddd",
         borderRadius: "1vh",
         boxShadow: "0 0.2vh 0.4vh rgba(0, 0, 0, 0.1)",
-        width: `16.5vw`,
-        height: `16vh`,
+        width: `auto`,
+        height: `auto`,
         padding: "0.5vh",
       }}
     >
