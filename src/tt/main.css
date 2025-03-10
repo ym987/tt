@@ -11,7 +11,7 @@
   margin-top: 25vh;
 }
 
-@media (min-aspect-ratio: 20/16) {
+@media (min-aspect-ratio: 3/4) {
   .right-panel {
     height: 100vh;
     width: 25vw;

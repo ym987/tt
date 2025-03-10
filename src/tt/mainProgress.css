@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-@media (min-aspect-ratio: 20/16) {
+@media (min-aspect-ratio: 3/4) {
   .main-progress {
     flex-direction: column;
   }
