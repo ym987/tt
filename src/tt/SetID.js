@@ -24,7 +24,7 @@ async function getCodeMossad(ttID) {
     return {};
   } catch (error) {
     console.error("Error fetching data:", error);
-    return null;
+    return {};
   }
 }
 
