@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.9aeb9592.css",
-    "main.js": "/static/js/main.986d9405.js",
+    "main.js": "/static/js/main.c794016e.js",
     "static/js/453.8fe43704.chunk.js": "/static/js/453.8fe43704.chunk.js",
     "static/media/SuezOne-Regular.ttf": "/static/media/SuezOne-Regular.7a29bdf962eca22873aa.ttf",
     "index.html": "/index.html",
     "main.9aeb9592.css.map": "/static/css/main.9aeb9592.css.map",
-    "main.986d9405.js.map": "/static/js/main.986d9405.js.map",
+    "main.c794016e.js.map": "/static/js/main.c794016e.js.map",
     "453.8fe43704.chunk.js.map": "/static/js/453.8fe43704.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9aeb9592.css",
-    "static/js/main.986d9405.js"
+    "static/js/main.c794016e.js"
   ]
 }
