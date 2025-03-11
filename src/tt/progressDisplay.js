@@ -66,6 +66,11 @@ function ProgressDisplay({ ttID }) {
       {listToDisplay.map((info, i) => (
         <ColorChangingComponent key={i} info={info} />
       ))}
+      {listToDisplay.length < amountToDisplay &&
+        Array(amountToDisplay - listToDisplay.length)
+          .fill(null)
+          .map((_, i) => <ColorChangingComponent key={i} empty={true} info={{ Name: "", Goal: "0", Cumule: "0" }}/>)
+      }
     </div>
   );
 }
