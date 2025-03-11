@@ -8,6 +8,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import ProgressDisplay from "./progressDisplay";
 import MainProgress from "./mainProgress";
 
+import "./main.css"
+
 const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
   const [open, setOpen] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
@@ -69,17 +71,10 @@ const MyComponent = ({ ttID, mtchingId, setttID, setMatchingId }) => {
 
   return (
     <>
-      <div
-        style={{
-          position: "fixed",
-          height: "100%",
-          width: "25%",
-          marginLeft: "75%",
-        }}
-      >
+      <div className="right-panel">
         {ttID && <MainProgress ttID={ttID} mtchingId={mtchingId} />}
       </div>
-      <div style={{ position: "fixed", height: "100%", width: "75%" }}>
+      <div className="left-panel">
         {ttID && <ProgressDisplay ttID={ttID} />}
       </div>
 

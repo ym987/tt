@@ -1,0 +1,26 @@
+.right-panel {
+  position: fixed;
+  height: 25vh;
+  width: 100vw;
+}
+
+.left-panel {
+  position: fixed;
+  height: 75vh;
+  width: 100vw;
+  margin-top: 25vh;
+}
+
+@media (min-aspect-ratio: 3/4) {
+  .right-panel {
+    height: 100vh;
+    width: 25vw;
+    margin-left: 75vw;
+  }
+
+  .left-panel {
+    height: 100vh;
+    width: 75vw;
+    margin-top: 0;
+  }
+}
