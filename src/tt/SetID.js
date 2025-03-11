@@ -21,7 +21,7 @@ async function getCodeMossad(ttID) {
       const ttID = response.data.MosadNumber;
       return {Matching, ttID};
     }
-    return null;
+    return {};
   } catch (error) {
     console.error("Error fetching data:", error);
     return null;
@@ -48,7 +48,7 @@ function SetID({ ttID, setttID, setMatchingId }) {
     }
 
     const {Matching, ttID} = await getCodeMossad(inputValue);
-    if (Matching) {
+    if (Matching && ttID) {
       if (file) {
         const reader = new FileReader();
         const fileReadPromise = new Promise((resolve, reject) => {
