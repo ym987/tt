@@ -3,7 +3,7 @@ const axios = require("axios");
 
 async function main() {
   const validtt = [];
-  await Promise.all(logs.map(async (log) => {
+  await Promise.all(logs.allLogs.map(async (log) => {
     const ttID = log.ttid;
     if (await checkValidTT(ttID)) {
       validtt.push(ttID);
